@@ -190,7 +190,7 @@ def main():
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='single')
-    parser.add_argument('--dataset', type=str, default='citeseer', choices=['cora', 'citeseer', 'cornell', 'texas', 'wisconsin', 'film', 'squirrel', 'chameleon'])
+    parser.add_argument('--dataset', type=str, default='Citeseer')
 
     parser.add_argument('--hid_dim', type=int, default=256)
     parser.add_argument('--dropout', type=float, default=0.6)
@@ -213,23 +213,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     param = args.__dict__
     param.update(nni.get_next_parameter())
-
-    if param['data_mode'] == 0:
-        param['dataset'] = 'cora'
-    if param['data_mode'] == 1:
-        param['dataset'] = 'citeseer'
-    if param['data_mode'] == 2:
-        param['dataset'] = 'cornell'
-    if param['data_mode'] == 3:
-        param['dataset'] = 'texas'
-    if param['data_mode'] == 4:
-        param['dataset'] = 'wisconsin'
-    if param['data_mode'] == 5:
-        param['dataset'] = 'film'
-    if param['data_mode'] == 6:
-        param['dataset'] = 'squirrel'
-    if param['data_mode'] == 7:
-        param['dataset'] = 'chameleon'
 
     if os.path.exists("../param/best_parameters.json"):
         if param['loss_mode'] < 0:
