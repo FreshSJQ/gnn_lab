@@ -161,17 +161,56 @@ class WebKB(InMemoryDataset):
         return '{}()'.format(self.name)
 
 
+# def DataLoader(name):
+#     if 'cSBM_data' in name:
+#         path = '../data/'
+#         dataset = dataset_ContextualSBM(path, name=name)
+#     else:
+#         name = name.lower()
+
+#     if name in ['cora', 'citeseer', 'pubmed']:
+#         root_path = '../'
+#         path = osp.join(root_path, 'data', name)
+#         dataset = Planetoid(path, name, transform=T.NormalizeFeatures())
+#     elif name in ['computers', 'photo']:
+#         root_path = '../'
+#         path = osp.join(root_path, 'data', name)
+#         dataset = Amazon(path, name, T.NormalizeFeatures())
+#     elif name in ['chameleon', 'squirrel']:
+#         # use everything from "geom_gcn_preprocess=False" and
+#         # only the node label y from "geom_gcn_preprocess=True"
+#         preProcDs = WikipediaNetwork(
+#             root='../data/', name=name, geom_gcn_preprocess=False, transform=T.NormalizeFeatures())
+#         dataset = WikipediaNetwork(
+#             root='../data/', name=name, geom_gcn_preprocess=True, transform=T.NormalizeFeatures())
+#         data = dataset[0]
+#         data.edge_index = preProcDs[0].edge_index
+#         return dataset, data
+
+#     elif name in ['film']:
+#         dataset = Actor(
+#             root='../data/film', transform=T.NormalizeFeatures())
+#     elif name in ['texas', 'cornell']:
+#         dataset = WebKB(root='../data/',
+#                         name=name, transform=T.NormalizeFeatures())
+#     else:
+#         raise ValueError(f'dataset {name} not supported in dataloader')
+
+#     return dataset, dataset[0]
+
 def DataLoader(name):
     if 'cSBM_data' in name:
         path = '../data/'
         dataset = dataset_ContextualSBM(path, name=name)
     else:
         name = name.lower()
+    print(name)
 
     if name in ['cora', 'citeseer', 'pubmed']:
-        root_path = '../'
-        path = osp.join(root_path, 'data', name)
+        path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'Planetoid')
         dataset = Planetoid(path, name, transform=T.NormalizeFeatures())
+        # data = dataset[0].to(device)
+        # print(data)
     elif name in ['computers', 'photo']:
         root_path = '../'
         path = osp.join(root_path, 'data', name)
@@ -179,10 +218,16 @@ def DataLoader(name):
     elif name in ['chameleon', 'squirrel']:
         # use everything from "geom_gcn_preprocess=False" and
         # only the node label y from "geom_gcn_preprocess=True"
-        preProcDs = WikipediaNetwork(
-            root='../data/', name=name, geom_gcn_preprocess=False, transform=T.NormalizeFeatures())
-        dataset = WikipediaNetwork(
-            root='../data/', name=name, geom_gcn_preprocess=True, transform=T.NormalizeFeatures())
+        # preProcDs = WikipediaNetwork(
+        #     root='../data/', name=name, geom_gcn_preprocess=False, transform=T.NormalizeFeatures())
+        # dataset = WikipediaNetwork(
+        #     root='../data/', name=name, geom_gcn_preprocess=True, transform=T.NormalizeFeatures())
+        # data = dataset[0]
+        # data.edge_index = preProcDs[0].edge_index
+        # return dataset, data
+        path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'WikipediaNetwork')
+        preProcDs = WikipediaNetwork(path, name, geom_gcn_preprocess=False, transform=T.NormalizeFeatures())
+        dataset = WikipediaNetwork(path, name, geom_gcn_preprocess=True, transform=T.NormalizeFeatures())
         data = dataset[0]
         data.edge_index = preProcDs[0].edge_index
         return dataset, data

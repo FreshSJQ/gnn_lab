@@ -93,4 +93,3 @@ python train_model.py --RPMAX $RPMAX \
         --dataset cornell \
         --lr 0.05 \
         --alpha 0.9 
-
