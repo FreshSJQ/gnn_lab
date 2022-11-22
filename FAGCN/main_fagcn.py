@@ -5,7 +5,7 @@ import torch
 import torch.nn.functional as F
 
 import torch_geometric.transforms as T
-from torch_geometric.datasets import Planetoid, WikipediaNetwork, WebKB, Actor, LINKXDataset
+from torch_geometric.datasets import Planetoid, WikipediaNetwork, WebKB, Actor, LINKXDataset, Amazon
 from torch_geometric.logging import init_wandb, log
 from torch_geometric.nn import GATConv
 from model import FAGCN
@@ -49,11 +49,18 @@ elif args.dataset in ['Actor']:
     dataset = Actor(path, transform=T.NormalizeFeatures())
     data = dataset[0].to(device)
     print(data)
+    exit(0)
 elif args.dataset in ['penn94']:
     path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'LINKXDataset')
     dataset = LINKXDataset(path, args.dataset, transform=T.NormalizeFeatures())
     data = dataset[0].to(device)
     print(data)
+elif args.dataset in ['Computers', 'Photo']:
+    path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'Amazon')
+    dataset = Amazon(path, args.dataset, transform=T.NormalizeFeatures())
+    data = dataset[0].to(device)
+    print(data)
+    exit(0)
 else:
     print(f"not find dataset {args.dataset}")
     exit(0)
