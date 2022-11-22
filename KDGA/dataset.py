@@ -59,17 +59,3 @@ def load_data(dataset_name):
         test_mask = data.test_mask[:, 0]
 
     return data.x.to(device), adj_orig.to(device), adj_norm.to(device), labels.to(device), train_mask, val_mask, test_mask, nclass
-
-
-def scipysp_to_pytorchsp(sp_mx):
-
-    if not sp.isspmatrix_coo(sp_mx):
-        sp_mx = sp_mx.tocoo()
-
-    coords = np.vstack((sp_mx.row, sp_mx.col)).transpose()
-    values = sp_mx.data
-    shape = sp_mx.shape
-
-    pyt_sp_mx = torch.sparse.FloatTensor(torch.LongTensor(coords.T), torch.FloatTensor(values), torch.Size(shape))
-
-    return pyt_sp_mx

@@ -190,7 +190,7 @@ def main():
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='single')
-    parser.add_argument('--dataset', type=str, default='Citeseer')
+    parser.add_argument('--dataset', type=str, default='CiteSeer')
 
     parser.add_argument('--hid_dim', type=int, default=256)
     parser.add_argument('--dropout', type=float, default=0.6)
